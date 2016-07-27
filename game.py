@@ -3,12 +3,89 @@ import sys
 import time
 
 illuminationLvl1Found = False
+litTorchFound = False
+
+
+
+class characterClass():
+    def __init__(self):
+        self._lvl = 1
+        self._exp = 0
+        self._hp = 10
+        self._mana = 10
+        self._str = 5
+        self._int = 5
+        self._dex = 5
+        self._weapon = ''
+
+        weaponDictionary = {'sword': 2, 'bow': 4}
+        
+        
+    def incExp(self, amt):
+        self._exp += amt
+        if self._exp >= 10 and self._exp < 20:
+            self._lvl = 2
+            slowprint('\n\nDing! You have reached level {}'.format(self._lvl))
+        elif self._exp >= 20 and self._exp < 40:
+            self._lvl = 3
+        elif self._exp >= 40 and self._exp < 80:
+            self._exp = 4
+        elif self._exp >= 80 and self._exp < 140:
+            self._exp = 5
+        elif self._exp >= 140 and self._exp < 200:
+            self._exp = 6
+        elif self._exp >= 200 and self._exp < 250:
+            self._exp = 7
+        elif self._exp >= 250 and self._exp < 300:
+            self._exp = 8
+        elif self._exp >= 300 and self._exp < 350:
+            self._exp = 9
+        elif self._exp >= 350 and self._exp < 400:
+            self._exp = 10
+            
+    def incHP(self, amt):
+        self._hp += amt
+    def incMana(self, amt):
+        self._mana += amt
+    def incStr(self, amt):
+        self._str += amt
+    def incInt(self, amt):
+        self._int += amt
+    def incDex(self, amt):
+        self._dex += amt
+    def castLvl1Lum(self):
+        if self._mana >= 1:
+            self._mana -= 1
+            return True
+        else:
+            slowprint('\nNot enough mana!\n')
+            return False
+
+class Warrior(characterClass):
+    def __init__(self):
+        super().__init__()
+        self._str = 10
+
+
+
+
+
+
+
+
+
+
+
+muddbutt = Warrior()
+
+
+
 
 def slowprint(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(random.random() * 0.005)
+        time.sleep(random.random() * 0.0005)
     print('\n')
 
 slowprint('Welcome to Diablo the text based version!\n\n')
@@ -31,12 +108,15 @@ def church():
     slowprint('As you walk to the back-room, you hear a noise from the other side of the door...\n\n')
     
     slowprint('Do you enter the room? 1)    or     2) Continue searching the church for a weapon? ')
+    slowprint('Or 3) see what is outside?')
 
     action = input('>> ')
     if action == '1':
         enterBackRoom()
-    else:
+    elif action == '2':
         searchChurchForWeapon()
+    elif action == '3':
+        outside()
 
 def searchChurchForWeapon():
     slowprint('You peer around the church for something resembling a weapon.')
@@ -67,6 +147,7 @@ def readDustyText():
     slowprint('You have discovered a minor incantation to illuminate your surroundings! This could come in handy...')
     global illuminationLvl1Found
     illuminationLvl1Found = True
+    
     searchChurchForWeapon()
 
 def continueSearchForWeapon():
@@ -98,7 +179,42 @@ def enterBackRoom():
     elif action == '2':
         speakToPriest()
     else:
-        returnToChurch()
+        slowprint('Seeing the look on the priest\'s face, you back away slowly whilst closing the door...')
+        church()
+
+def approachPriest():
+    slowprint('As you step forward, the priest speaks to you. "Who are you stranger? What brings you to our light forsaken lands?"')
+    slowprint('You dont remember why you are here or how you came to be in this church, but you do know who are.')
+    slowprint('How do you respond?')
+    slowprint('Do you talk about your endless fight against evil 1) or 2)Do you put the priest in his place? or 3)Do you apologize and retreat back to the church?')
+    action = input('>> ')
+    if action == '1':
+        slowprint('You respond, "I am a fighter of darkness. I go where the path of righteousness takes me."')
+        slowprint('The priest lets out a sigh of relief and stands up. "I am glad to hear that. We need more of your kind in these troubled times."')
+        slowprint('"If you are truly a defender of man, please take a look inside my chest."')
+        
+    elif action == '2':
+        slowprint('"What business is it to you old man? I go where I please."')
+        slowprint('The priest frowns in anger and lets out an exasperated sigh. He stands up and says, "Well whatever your business may be, I have no gold. Only weapons."')
+        slowprint('"I cannot in good faith let a man, even one as rude as yourself, go out into the darkness unarmed. Look inside my chest and take what you need."')
+        slowprint('You notice him stuff something silver out of sight.')
+    else:
+        slowprint('"Forgive me. I will be on my way."')
+        slowprint('The priest stands up and says, "Wait. You cannot go out there unarmed. It is too dangerous. Heaven knows how you got here in the first place!"')
+        slowprint('"Please, take a look inside my chest and take whatever weapon you need." The priest ushers you over and opens his chest. As you walk past him, you notice him stuff something silver in his robes.')
+    
+    slowprint('Inside are three weapons: A sword, a Bow, and a Staff.')
+    slowprint('Which weapon do you choose?')
+    slowprint('The Warriors sword 1) The Rogues Bow 2) The Wizards Staff 3) ')
+    action = input('>> ')
+    if action == '1':
+        slowprint('You pick up the warriors sword. It is very old and worn but still retains its sharp edge.')
+    elif action == '2':
+        slowprint('You pick up the rogues bow. It is plain and made of a brown wood. There are 10 arrows as well.')
+    elif action == '3':
+        slowprint('You pick up the wizards staff. Ancient runes adorn its surface. You feel the remnant of magic inside.')
+    slowprint('"Go forth my child in the light."')
+    church()
 
 def outside():
 
@@ -186,6 +302,32 @@ def takeBeatenPath():
     if action == '3':
         returnToBridge()
 
+def approachCaravan():
+    global litTorchFound
+    slowprint('Upon closer inspection, the Caravan seems abandoned.  That is odd because the torches are lit...')
+    slowprint('Do you climb up and have a look inside the carriage 1) or grab one of the torches and head back to the bridge? 2)')
+    action = input('>> ')
+    if action == '1':
+        slowprint('After taking a look inside the Carriage there does not appear to be anything too interesting or useful.')
+    elif action == '2':
+        litTorchFound = True
+        returnToBridge()
+
+def returnToBridge():
+    slowprint('You are back at the bridge crossroads.')
+
+    slowprint('Do you go back to the left where the caravan was? 1)')
+    slowprint('Or see what lies off to the right where the path has been mostly reclaimed by the Woods? 2)')
+    slowprint('OR do you listen to your gut telling you, you should seek shelter back at the church immediately. 3)')
+
+    action = input('>> ')
+    if action == '1':
+          takeBeatenPath()
+    elif action == '2':
+          takeOvergrownPath()
+    elif action == '3':
+          goBackAcrossBridge()
+
 def takeOvergrownPath():
     slowprint('You head to the right along where a path once was.  You brush aside bushes and tree branches as you slowly make your way deeper into the forboding Wood. ')
     slowprint('\nAs sight of the bridge dissappears behind you, ahead of you is nothing but more trees, overgrowth and darkness.')
@@ -232,6 +374,25 @@ def openHutHatch():
         proceedIntoHutDarkness()
     elif action == '2':
         continueInvestigatingHut()
+
+def proceedIntoHutDarkness():
+    global illuminationLvl1Found
+    global litTorchFound
+    if illuminationLvl1Found or litTorchFound:
+        slowprint('It is really dark, perhaps you should light the way...')
+        action = input('1) To use an illumination spell or 2) to use your lit torch.')
+        if action == '1':
+            if muddbutt.castLvl1Lum():
+                slowprint('You cast level 1 illumination! Your palm emits a weak glow.')
+        if action == '2':
+            slowprint('Your light your torch and proceed forward.')
+        slowprint('You can just barely make out the features of an underground passage.')
+        slowprint('You follow the corridor as it twists and turns.  It rises up but more often it slopes down.')
+        slowprint('After what seems like hours, you at last reach the end of the tunnel.  At the end of the tunnel is a circular tube-like room, just barely wider than a man.')
+        slowprint('You are inside a well! Below is the water and on the wall there are rungs leading up and out.')
+                
+    else:
+        slowprint('It is too dark to proceed any further. Perhaps you should return when you have some form of illumination.')
 
 def climbHutLadder():
     slowprint('You decide to climb the ladder. Once in the attic, you notice a window which faces the clearing which you came from.')
