@@ -245,19 +245,125 @@ def goToGraveyard():
     slowprint('Off in the distance to the right, a small hill with a gnarled Oak sits atop its peak.')
     slowprint('To the left, a large Crypt silently keeps watch over the smaller tombs and tombstones.')
     slowprint('Besides you, what appears to be freshly disturbed soil next to an empty grave.\n\n')
-    slowprint('Do you: cross the graveyard to see what can be seen from the vantage of the hill with the (o)ak?\n')
-    slowprint('Walk over to the (c)rypt to see what is inside?\n')
-    slowprint('Or more closely inspect the disturbed soil and (e)mpty grave?')
+    slowprint('Do you: cross the graveyard to see what can be seen from the vantage of the hill with the (1) oak?\n')
+    slowprint('Walk over to the (2)crypt to see what is inside?\n')
+    slowprint('Or more closely inspect the disturbed soil and (3)empty grave?')
     action = input('>> ')
-    while action != 'o' and action != 'c' and action != 'e':
-        if action == 'o':
+    while action != '1' or action != '2' or action != '3':
+        if action == '1':
             goToOakTree()
-        elif action == 'c':
+        elif action == '2':
             goToCrypt()
-        elif action == 'e':
+        elif action == '3':
             goToEmptyGrave()
         else:
-            action = input('\nChoose o, c, or e.\n')
+            action = input('\nChoose 1, 2, or 3.\n')
+
+def goToOakTree():
+
+    action = ''
+    
+    instance_of_oak_tree = random.randint(1,3)
+	
+    slowprint('You decide to head over to the Oak Tree to see what you can find.\n')
+    slowprint('It is very old with blackened bark and long dead leaves.\n')
+    
+    if instance_of_oak_tree == 1:
+        # zombie
+        slowprint('As you reach the base of the tree, you notice a mound of disturbed dirt. On the trunk is a thick liquid congealing on the bark \n')
+        slowprint('You touch it with your bare hand. It feels like blood and ichor. Dread washes over you.\n')
+        slowprint('A moan comes from behind. "Uuhhhh".\n')
+        slowprint('You whip around to see the corpse of a man shambling towards you. Its skin falling off in great chunks and missing an eye. \n')
+        slowprint('Since it moves so slowly, you have more time to think over your options. What do you choose?\n')
+        slowprint('Stand your ground and fight? (1) Run to the crypt? (2) Run back to the church? (3) Run into the field of graves? (4)\n')
+        
+        while action != '1' or action != '2' or action != '3' or action != '4':
+            action = input('>> ')
+        
+            if action == '1':
+                goToZombieFight()
+            elif action == '2':
+                goToRunCrypt()
+            elif action == '3':
+                goToRunChurch()
+            elif action == '4': 
+                goToFieldGraves()
+            else:
+                slowprint('If you dont decide quickly the zombie will be upon you!\n')
+    elif instance_of_oak_tree == 2:
+        #skeleton archer
+        slowprint('You climb to the top of the hill with the Oak. You gaze out over the field of graves in all directions.\n')
+        slowprint('**wwwhhiiizzzzz**    An arrow flies past your head from the left!\n')
+        slowprint('You see an skeleton archer nocking another arrow ready to send at you.\n\n')
+        slowprint('Do you charge down the hill towards the archer? (1) , or take cover behind the tree to plan your next move? (2)')
+            
+            
+        while action != '1' or action != '2':
+            action = input('>> ')
+            if action == '1':
+                chargeSkeletalArcher()
+            elif action == '2':
+                planNextMoveBehindTree()
+            else:
+                slowprint('You better decide what to do fast, that next arrow might not miss!\n')
+            
+    elif instance_of_oak_tree == 3:
+        #quillRat!!
+        slowprint('You notice a burrow dug out at the base of the tree. The dirt around the edge is fresh.\n')
+        slowprint('There is a shiny gold coin at the mouth of the burrow. Counting your blessings, you pocket the coin.\n')
+        slowprint('As you peer in for more treasure, a screeching sound greets you. Your hair stands on end.\n')
+        slowprint('A Quillrat crawls out of the burrow, its spines standing on edge, ready to be thrown at you.\n')
+        slowprint('You cannot run away, for fear of getting a quill in your back. You must stand your ground and fight!\n')
+        slowprint('("Ah! The thrill of battle!")[1] ("Heaven guide my hand.")[2] ("I never thought I would die to a quillrat.")[3]\n')
+        
+        action = input('>> ')
+        
+        goToQuillRatBattle()
+       
+            
+def chargeSkeletalArcher():
+	
+	archer_accuracy = random.randint(1,10)
+	slowprint('You charge down the hill towards the skeletal archer.\n')
+	
+	if archer_accuracy >= 8:
+		# basically the archer has a 30% chance to kill
+		slowprint('The archer loosed an arrow with deadly accuracy.  You watch in slow motion as the arrow flies straight at you.\n')
+		slowprint('The wind is knocked out of you as the arrow sinks into your chest.\n')
+		slowprint('You fall down to your knee and collapse down into the wet grass and dirt.  As the darkness closes in around you, the last thing you \
+		see is the two hollows of the skeletal archers empty eye sockets and you could swear his skeletal visage wore a grin ....\n')
+		youDied()
+	else:
+		slowprint("The archer fires another arrow at you but it sails by harmlessly. \n")
+		slowprint('As you charge towards the archer you let out a mighty roar and throw the hardest punch possible at the skeletons chest.\n')
+		slowprint("The sickening crack of dry brittle bones fills your ears as the skeleton's ribcage crumples beneath your mighty blow.\n")
+		slowprint('The archer flies backward and as it falls, whatever unholy magic was giving it unnatural life and holding the bones together vanishes.\n')
+	
+def goToQuillRatBattle():
+	
+	quillrat_accuracy = random.randint(1,10)
+	slowprint('The Quillrat raises its backside in preperation for firing its quills. \n')
+	
+
+	if quillrat_accuracy >= 9:
+		slowprint('The quills come firing at great speed and imbed themselves deep in your chest.\n')
+		slowprint('You scream in pain and crumble to the ground. Your chest feels wet with your own blood. \n')
+		slowprint('The Quillrat screaches in delight and crawls its way towards you, ready to drag you into its burrow for its meal. \n')
+		youDied()
+	else:
+		slowprint('The Quillrat fires a few quills but they fly past, almost grazing your arm. \n')
+		slowprint('You smile to yourself and prepare to attack the foolish Quillrat. \n')
+		slowprint('You wind up a good kick and kick the beast in the face. It screams in agony and retreats back into its burrow. \n')
+		slowprint('Now that the quillrat has retreated, what do you decide to do next? Do you...\n')
+		slowprint('Search the tree for more treasure? (1) Go back to the front gate of the graveyard? (2) \n')
+		
+		while action != '1' or action != '2':
+			action = input('>> ')
+			
+			if action == '1':
+				goToSearchTreeTreasure()
+			else: 
+				goToReturnFrontGraveyard()
 
 def enterForest():
 
@@ -415,7 +521,16 @@ def goBackAcrossBridge():
     slowprint('As you cross the church grounds, you still cant shake the feeling that something is watching you.')
     slowprint('You quicken your pace and head for the side entrance of the church, grab the door handle, and enter.')
     church()
-
+def youDied():
+	slowprint('You died!\n')
+	playAgain = ''
+	while playAgain != '1' or playAgain != '2':
+		playAgain = input('Would you like to play again? Yes [1]  No [2]\n')
+		if playAgain == '1':
+			startingPoint()
+		else:
+			slowprint('Goodbye!\n')
+			sys.exit()
 def main():        
 
     startingPoint()
